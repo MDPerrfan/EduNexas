@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
-import { dummyCourses } from "../assets/assets";
+import { dummyCourses,dummyTestimonial } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
     const [allcourses, setAllcourses] = useState([]);
+    const[testimonials,setTestimonials]=useState([])
+    const[isEducator,setIsEducator]=useState(true)
     const navigate = useNavigate()
     //get all courses
     const getAllcourses = async () => {
@@ -24,14 +26,22 @@ export const AppContextProvider = (props) => {
     
         return totalRatings/course.courseRatings.length
     }
+    //get all testimonials 
+    const getTestimonials=()=>{
+        setTestimonials(dummyTestimonial)
+    }
     useEffect(() => {
         getAllcourses();
+        getTestimonials();
     }, [])
     const value = {
         allcourses,
         setAllcourses,
         navigate,
-        avgRating
+        avgRating,
+        isEducator,
+        setIsEducator,
+        testimonials
     }
     return (
         <AppContext.Provider value={value}>

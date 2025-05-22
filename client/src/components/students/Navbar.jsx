@@ -8,7 +8,7 @@ const Navbar = () => {
   const isCourseListPage = location.pathname.includes('/course-list');
   const { openSignIn } = useClerk();
   const { user } = useUser();
-  const {navigate }=useContext(AppContext)
+  const {navigate,isEducator }=useContext(AppContext)
   return (
     <div className={`flex items-center justify-between border-b border-gray-500 py-4 px-4 sm:px-10 md:px-14 lg:px-36 ${isCourseListPage ? 'bg-white' : 'bg-cyan-100/70'}`}>
       <img src={assets.logo} alt="" onClick={()=>navigate('/')} className='w-28 lg:w-32 cursor-pointer' />
@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className='flex items-center gap-4'>
           {user &&
             <>
-              <button >Become Educator</button>
+              <button onClick={()=>navigate('/educator')}>{isEducator?'Educator Dashboard':'Become an Educator'}</button>
               |
               <Link to="/my-enrollments"> My Enrollments</Link>
             </>
@@ -30,7 +30,7 @@ const Navbar = () => {
         <div className='flex items-center gap-1 sm:gap-2 max-sm:text-xs'>
         {user &&
             <>
-              <button >Become Educator</button>
+              <button onClick={()=>navigate('/educator')}>{isEducator?'Educator Dashboard':'Become an Educator'}</button>
               |
               <Link to="/my-enrollments"> My Enrollments</Link>
             </>
