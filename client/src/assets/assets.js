@@ -1,4 +1,7 @@
 import logo from './logo.svg'
+import logo2 from './logo2.png'
+import logo3 from './logo3.png'
+
 import logo_dark from './logo_dark.svg'
 import search_icon from './search_icon.svg'
 import cross_icon from './cross_icon.svg'
@@ -46,6 +49,8 @@ import lesson_icon from './lesson_icon.svg'
 
 export const assets = {
     logo,
+    logo2,
+    logo3,
     search_icon,
     sketch,
     microsoft_logo,
@@ -101,8 +106,7 @@ export const dummyEducatorData = {
     "__v": 0
 }
 
-export const dummyTestimonial = [
-    {
+export const dummyTestimonial = [{
         name: 'Donald Jackman',
         role: 'SWE 1 @ Amazon',
         image: assets.profile_img_1,
@@ -127,8 +131,7 @@ export const dummyTestimonial = [
 
 export const dummyDashboardData = {
     "totalEarnings": 707.38,
-    "enrolledStudentsData": [
-        {
+    "enrolledStudentsData": [{
             "courseTitle": "Introduction to JavaScript",
             "student": {
                 "_id": "user_2qQlvXyr02B4Bq6hT0Gvaa5fT9V",
@@ -172,8 +175,7 @@ export const dummyDashboardData = {
     "totalCourses": 8
 }
 
-export const dummyStudentEnrolled = [
-    {
+export const dummyStudentEnrolled = [{
         "student": {
             "_id": "user_2qQlvXyr02B4Bq6hT0Gvaa5fT9V",
             "name": "GreatStack",
@@ -211,21 +213,18 @@ export const dummyStudentEnrolled = [
     }
 ]
 
-export const dummyCourses = [
-    {
+export const dummyCourses = [{
         "_id": "605c72efb3f1c2b1f8e4e1a1",
         "courseTitle": "Introduction to JavaScript",
         "courseDescription": "<h2>Learn the Basics of JavaScript</h2><p>JavaScript is a versatile programming language that powers the web. In this course, you will learn the fundamentals of JavaScript, including syntax, data types, and control structures.</p><p>This course is perfect for beginners who want to start their journey in web development. By the end of this course, you will be able to create interactive web pages and understand the core concepts of JavaScript.</p><ul><li>Understand the basics of programming</li><li>Learn how to manipulate the DOM</li><li>Create dynamic web applications</li></ul>",
         "coursePrice": 49.99,
         "isPublished": true,
         "discount": 20,
-        "courseContent": [
-            {
+        "courseContent": [{
                 "chapterId": "chapter1",
                 "chapterOrder": 1,
                 "chapterTitle": "Getting Started with JavaScript",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture1",
                         "lectureTitle": "What is JavaScript?",
                         "lectureDuration": 16,
@@ -247,8 +246,7 @@ export const dummyCourses = [
                 "chapterId": "chapter2",
                 "chapterOrder": 2,
                 "chapterTitle": "Variables and Data Types",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture3",
                         "lectureTitle": "Understanding Variables",
                         "lectureDuration": 20,
@@ -273,13 +271,11 @@ export const dummyCourses = [
             "user_2qQlvXyr02B4Bq6hT0Gvaa5fT9V",
             "user_2qjlgkAqIMpiR2flWIRzvWKtE0w"
         ],
-        "courseRatings": [
-            {
-                "userId": "user_2qjlgkAqIMpiR2flWIRzvWKtE0w",
-                "rating": 5,
-                "_id": "6773e37360cb0ab974342314"
-            }
-        ],
+        "courseRatings": [{
+            "userId": "user_2qjlgkAqIMpiR2flWIRzvWKtE0w",
+            "rating": 5,
+            "_id": "6773e37360cb0ab974342314"
+        }],
         "createdAt": "2024-12-17T08:16:53.622Z",
         "updatedAt": "2025-01-02T04:47:44.701Z",
         "__v": 4,
@@ -292,13 +288,11 @@ export const dummyCourses = [
         "coursePrice": 79.99,
         "isPublished": true,
         "discount": 15,
-        "courseContent": [
-            {
+        "courseContent": [{
                 "chapterId": "chapter1",
                 "chapterOrder": 1,
                 "chapterTitle": "Advanced Data Structures",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": " lecture1",
                         "lectureTitle": "Lists and Tuples",
                         "lectureDuration": 720,
@@ -320,8 +314,7 @@ export const dummyCourses = [
                 "chapterId": "chapter2",
                 "chapterOrder": 2,
                 "chapterTitle": "Object-Oriented Programming",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture3",
                         "lectureTitle": "Classes and Objects",
                         "lectureDuration": 900,
@@ -345,13 +338,11 @@ export const dummyCourses = [
             "user_2qQlvXyr02B4Bq6hT0Gvaa5fT9V",
             "user_2qjlgkAqIMpiR2flWIRzvWKtE0w"
         ],
-        "courseRatings": [
-            {
-                "userId": "user_2qjlgkAqIMpiR2flWIRzvWKtE0w",
-                "rating": 5,
-                "_id": "6776369244daad0f313d81a9"
-            }
-        ],
+        "courseRatings": [{
+            "userId": "user_2qjlgkAqIMpiR2flWIRzvWKtE0w",
+            "rating": 5,
+            "_id": "6776369244daad0f313d81a9"
+        }],
         "createdAt": "2024-12-17T08:16:53.622Z",
         "updatedAt": "2025-01-02T06:47:54.446Z",
         "__v": 3,
@@ -364,13 +355,11 @@ export const dummyCourses = [
         "coursePrice": 69.99,
         "isPublished": true,
         "discount": 15,
-        "courseContent": [
-            {
+        "courseContent": [{
                 "chapterId": "chapter1",
                 "chapterOrder": 1,
                 "chapterTitle": "Introduction to Cybersecurity",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture1",
                         "lectureTitle": "What is Cybersecurity?",
                         "lectureDuration": 10,
@@ -392,8 +381,7 @@ export const dummyCourses = [
                 "chapterId": "chapter2",
                 "chapterOrder": 2,
                 "chapterTitle": "Basic Security Practices",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture3",
                         "lectureTitle": "Password Management",
                         "lectureDuration": 15,
@@ -430,13 +418,11 @@ export const dummyCourses = [
         "coursePrice": 99.99,
         "isPublished": true,
         "discount": 25,
-        "courseContent": [
-            {
+        "courseContent": [{
                 "chapterId": "chapter1",
                 "chapterOrder": 1,
                 "chapterTitle": "HTML & CSS Basics",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture1",
                         "lectureTitle": "Introduction to HTML",
                         "lectureDuration": 600,
@@ -458,8 +444,7 @@ export const dummyCourses = [
                 "chapterId": "chapter2",
                 "chapterOrder": 2,
                 "chapterTitle": "JavaScript Fundamentals",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture3",
                         "lectureTitle": "JavaScript Basics",
                         "lectureDuration": 800,
@@ -496,13 +481,11 @@ export const dummyCourses = [
         "coursePrice": 69.99,
         "isPublished": true,
         "discount": 20,
-        "courseContent": [
-            {
+        "courseContent": [{
                 "chapterId": "chapter1",
                 "chapterOrder": 1,
                 "chapterTitle": "Cloud Fundamentals",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture1",
                         "lectureTitle": "What is Cloud Computing?",
                         "lectureDuration": 600,
@@ -524,8 +507,7 @@ export const dummyCourses = [
                 "chapterId": "chapter2",
                 "chapterOrder": 2,
                 "chapterTitle": "Exploring Cloud Platforms",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture3",
                         "lectureTitle": "AWS Basics",
                         "lectureDuration": 800,
@@ -561,13 +543,11 @@ export const dummyCourses = [
         "coursePrice": 89.99,
         "isPublished": true,
         "discount": 20,
-        "courseContent": [
-            {
+        "courseContent": [{
                 "chapterId": "chapter1",
                 "chapterOrder": 1,
                 "chapterTitle": "Python for Data Science",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture1",
                         "lectureTitle": "Python Basics",
                         "lectureDuration": 30,
@@ -589,8 +569,7 @@ export const dummyCourses = [
                 "chapterId": "chapter2",
                 "chapterOrder": 2,
                 "chapterTitle": "Data Visualization",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture3",
                         "lectureTitle": "Introduction to Matplotlib",
                         "lectureDuration": 20,
@@ -615,13 +594,11 @@ export const dummyCourses = [
             "user_2qQlvXyr02B4Bq6hT0Gvaa5fT9V",
             "user_2qjlgkAqIMpiR2flWIRzvWKtE0w"
         ],
-        "courseRatings": [
-            {
-                "userId": "user_2qjlgkAqIMpiR2flWIRzvWKtE0w",
-                "rating": 5,
-                "_id": "6773acf160cb0ab974342248"
-            }
-        ],
+        "courseRatings": [{
+            "userId": "user_2qjlgkAqIMpiR2flWIRzvWKtE0w",
+            "rating": 5,
+            "_id": "6773acf160cb0ab974342248"
+        }],
         "createdAt": "2024-12-27T10:00:00.000Z",
         "updatedAt": "2024-12-31T09:57:48.992Z",
         "__v": 3,
@@ -634,13 +611,11 @@ export const dummyCourses = [
         "coursePrice": 89.99,
         "isPublished": true,
         "discount": 30,
-        "courseContent": [
-            {
+        "courseContent": [{
                 "chapterId": "chapter1",
                 "chapterOrder": 1,
                 "chapterTitle": "Introduction to Data Science",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture1",
                         "lectureTitle": "What is Data Science?",
                         "lectureDuration": 600,
@@ -662,8 +637,7 @@ export const dummyCourses = [
                 "chapterId": "chapter2",
                 "chapterOrder": 2,
                 "chapterTitle": "Machine Learning Basics",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture3",
                         "lectureTitle": "Supervised vs Unsupervised Learning",
                         "lectureDuration": 800,
@@ -699,13 +673,11 @@ export const dummyCourses = [
         "coursePrice": 59.99,
         "isPublished": true,
         "discount": 15,
-        "courseContent": [
-            {
+        "courseContent": [{
                 "chapterId": "chapter1",
                 "chapterOrder": 1,
                 "chapterTitle": "Cybersecurity Basics",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture1",
                         "lectureTitle": "Introduction to Cybersecurity",
                         "lectureDuration": 700,
@@ -727,8 +699,7 @@ export const dummyCourses = [
                 "chapterId": "chapter2",
                 "chapterOrder": 2,
                 "chapterTitle": "Network Security Fundamentals",
-                "chapterContent": [
-                    {
+                "chapterContent": [{
                         "lectureId": "lecture3",
                         "lectureTitle": "Securing Networks",
                         "lectureDuration": 800,
