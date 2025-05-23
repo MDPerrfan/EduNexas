@@ -9,7 +9,7 @@ const TestimonialSection = () => {
       <h2 className='text-3xl mb-3  text-gray-800 font-medium'>Testimonials</h2>
       <p className='text-gray-700 text-base'>Hear from our learners as they share their journeys of transformation, success, and how our
         <br /> platform has made a difference in their lives.</p>
-      <div className='grid grid-cols-auto gap-8 my-10'>
+      <div className='grid grid-cols-auto gap-8 my-10 md:p-5'>
         {
           testimonials.map((item, index) => (
             <div key={index} className='border border-r-1 rounded shadow-md overflow-hidden pb-5'>
@@ -28,7 +28,7 @@ const TestimonialSection = () => {
                     ))}
                   </div>
                   <p className='px-5 text-gray-800 text-start'>{item.feedback}</p>
-                  <p className='text-start text-blue-600 p-5 underline'>Read more</p>
+                  <a href='#' className='text-start text-blue-600 p-5 underline'>Read more</a>
                 </div>
             </div>
           ))
