@@ -4,6 +4,7 @@ import SearchBar from '../../components/students/SearchBar'
 import CourseCard from '../../components/students/CourseCard'
 import Footer from '../../components/students/Footer'
 import { useParams } from 'react-router-dom'
+import { assets } from '../../assets/assets'
 
 const CourseList = () => {
   const { allcourses, navigate } = useContext(AppContext)
@@ -34,6 +35,12 @@ const CourseList = () => {
             <SearchBar data={input}/>
           </div>
         </div>
+        {
+          input && <div className='inline-flex items-center gap-4 px-4 py-2 border mt-8 mx-5'>
+            <p className='text-gray-500'>{input}</p>
+            <img src={assets.cross_icon} alt="x" className='cursor-pointer' onClick={()=>navigate('/course-list')}/>
+          </div>
+        }
         <div className='grid lg:grid-cols-4 md:grid-cols-2 gap-6 px-5'>
           {
             filteredCourse.map((course, id) => (
