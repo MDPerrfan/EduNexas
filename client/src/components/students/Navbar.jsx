@@ -23,7 +23,7 @@ const Navbar = () => {
           }
         </div>
         {
-          user ? <UserButton /> : <button onClick={() => openSignIn()} className='bg-blue-600 px-5 py-2 rounded-full text-white '>Create account</button>
+          user ? <UserButton /> : <button onClick={() => openSignIn()} className='bg-[coral] px-5 py-2 rounded-full text-white '>Create account</button>
         }
       </div>
       <div className='md:hidden flex items-center gap-2 sm:gap-5 text-gray-500'>
