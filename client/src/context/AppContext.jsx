@@ -10,6 +10,7 @@ export const AppContextProvider = (props) => {
     const[testimonials,setTestimonials]=useState([])
     const[isEducator,setIsEducator]=useState(true)
     const navigate = useNavigate()
+    const currency = 'BDT'
     //get all courses
     const getAllcourses = async () => {
         setAllcourses(dummyCourses);
@@ -38,7 +39,7 @@ export const AppContextProvider = (props) => {
     return humanizeDuration(time * 60 * 1000, { units: ["h", "m"] })
   }
   //Function to calculate course duration
-  const calculateCourseDuraton=(course)=>{
+  const calculateCourseDuration=(course)=>{
     let time =0
     course.courseContent.map((chapter)=>chapter.chapterContent.map(
       (lec)=>time+=lec.lectureDuration
@@ -68,8 +69,9 @@ export const AppContextProvider = (props) => {
         setIsEducator,
         testimonials,
         calculateChaptertime,
-        calculateCourseDuraton,
-        calculateNoOfLectures
+        calculateCourseDuration,
+        calculateNoOfLectures,
+        currency
     }
     return (
         <AppContext.Provider value={value}>
