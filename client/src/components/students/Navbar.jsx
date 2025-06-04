@@ -11,7 +11,10 @@ const Navbar = () => {
   const {navigate,isEducator }=useContext(AppContext)
   return (
     <div className={`flex items-center justify-between border-b border-gray-500 py-4 px-4 sm:px-10 md:px-14 lg:px-36 ${isCourseListPage ? 'bg-white' : 'bg-blue-300/70'}`}>
-      <img src={assets.logo3} alt="" onClick={()=>navigate('/')} className='w-32 lg:w-36 cursor-pointer' />
+      <div className='flex items-center'>
+      <img src={assets.logo} alt="" onClick={()=>navigate('/')} className='w-16 lg:w-20 cursor-pointer' />
+      <p className='text-[coral] font-semibold lg:text-2xl text-xl'>EduNexas</p>
+      </div>
       <div className='hidden md:flex items-center gap-5 text-gray-800'>
         <div className='flex items-center gap-4'>
           {user &&

@@ -5,7 +5,7 @@ import { assets } from '../../assets/assets'
 const TestimonialSection = () => {
   const { testimonials } = useContext(AppContext)
   return (
-    <div>
+    <div className='px-5'>
       <h2 className='text-3xl mb-3  text-gray-800 font-medium'>Testimonials</h2>
       <p className='text-gray-700 text-base'>Hear from our learners as they share their journeys of transformation, success, and how our
         <br /> platform has made a difference in their lives.</p>
