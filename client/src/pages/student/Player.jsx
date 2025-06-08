@@ -6,6 +6,7 @@ import humanizeDuration from 'humanize-duration'
 import Loading from '../../components/students/Loading'
 import YouTube from 'react-youtube'
 import Footer from '../../components/students/Footer'
+import Rating from '../../components/students/Rating'
 const Player = () => {
   const { enrolledcourses, calculateChaptertime } = useContext(AppContext)
   const { courseId } = useParams()
@@ -76,6 +77,7 @@ const Player = () => {
           </div>
           <div className='flex items-center gap-2 py-3 mt-10'>
             <h1 className='text-xl font-bold'>Rate this course:</h1>
+            <Rating initialRating={0}/>
           </div>
         </div>
         <div className='md:mt-10'>{/*right column*/}
