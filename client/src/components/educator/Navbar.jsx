@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const Navbar = () => {
   const educatorData = dummyEducatorData
   const {user}= useUser()
-  return (
+  return educatorData && (
     <div className='flex items-center justify-between px-4 md:px-8 border-b border-gray-500 py-3 bg-blue-300/70'>
       <Link to='/'>
             <img src={assets.logo} alt="logo" className='w-24 lg:w-28' />
