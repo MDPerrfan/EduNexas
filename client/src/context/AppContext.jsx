@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { dummyCourses,dummyTestimonial } from "../assets/assets";
+import { dummyCourses,dummyStudentEnrolled,dummyTestimonial } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import humanizeDuration from 'humanize-duration'
 
@@ -10,6 +10,7 @@ export const AppContextProvider = (props) => {
     const[testimonials,setTestimonials]=useState([])
     const[isEducator,setIsEducator]=useState(true)
     const[enrolledcourses,setEnrolledcourses]=useState([])
+    const [enrolledStudents,setEnrolledStudents]=useState([])
     const navigate = useNavigate()
     const currency = 'BDT'
     //get all courses
@@ -61,10 +62,15 @@ export const AppContextProvider = (props) => {
   const fetchUserEnrolledCourses=async()=>{
     setEnrolledcourses(dummyCourses)
   }
+  //Fetch Enrolled Students
+  const fetchEnrolledStudents=async()=>{
+    setEnrolledStudents(dummyStudentEnrolled)
+  }
     useEffect(() => {
         getAllcourses();
         getTestimonials();
         fetchUserEnrolledCourses()
+        fetchEnrolledStudents()
     }, [])
     const value = {
         allcourses,
@@ -78,7 +84,8 @@ export const AppContextProvider = (props) => {
         calculateCourseDuration,
         calculateNoOfLectures,
         currency,
-        enrolledcourses
+        enrolledcourses,
+        enrolledStudents
     }
     return (
         <AppContext.Provider value={value}>
