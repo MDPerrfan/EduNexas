@@ -1,5 +1,5 @@
 import logo from './logo.png'
-import logo2 from './logo2.png'
+import logo2 from './logo-Photoroom.png'
 import logo3 from './logo3.png'
 
 import logo_dark from './logo_dark.svg'
