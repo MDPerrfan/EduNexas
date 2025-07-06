@@ -3,7 +3,7 @@ import Course from '../models/Course.js';
 import { v2 as cloudinary } from 'cloudinary'
 export const updateRoleEducator = async(req, res) => {
     try {
-        const { userId } = req.auth();
+        const { userId } = req.auth()
         await clerkClient.users.updateUserMetadata(userId, {
             publicMetadata: {
                 role: 'educator',
@@ -19,16 +19,15 @@ export const updateRoleEducator = async(req, res) => {
 
 export const addCourse = async(req, res) => {
     try {
+        const { userId } = req.auth()
         const { courseData } = req.body
-        const imageFile = req.imageFile
-        const educatorId = req.auth();
+        const imageFile = req.file
+        console.log(userId)
         if (!imageFile) {
             return res.json({ success: false, message: "Thumbnail is not attached" })
-
-
         }
         const parsedCourseData = await JSON.parse(courseData)
-        parsedCourseData.educator = educatorId
+        parsedCourseData.educator = userId
 
         const newCourse = await Course.create(parsedCourseData)
         const imageUpload = await cloudinary.uploader.upload(imageFile.path)
