@@ -28,13 +28,12 @@ export const userEnrolledCourses = async(req, res) => {
         } catch (error) {
             res.json({ success: false, message: error.message })
         }
-    } //buy course
+    }
+    //buy course
 export const purchaseCourse = async(req, res) => {
-
     try {
         const { courseId } = req.body
         const { origin } = req.headers
-        console.log(courseId, origin)
         const { userId } = req.auth()
         const userData = await User.findById(userId)
         const courseData = await Course.findById(courseId)
