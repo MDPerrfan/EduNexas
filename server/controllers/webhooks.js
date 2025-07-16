@@ -55,7 +55,7 @@ const clerkWebhooks = async(req, res) => {
 }
 export default clerkWebhooks
 
-//webhooks for STRIPE
+//webhooks for STRIPE 9:45
 
 const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY)
 export const stripeWebhooks = async(req, res) => {
