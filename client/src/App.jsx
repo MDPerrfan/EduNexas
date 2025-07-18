@@ -12,6 +12,8 @@ import MyCourses from './pages/educator/MyCourses.jsx'
 import AddCourse from './pages/educator/AddCourse.jsx'
 import StudentsEnrolled from './pages/educator/StudentsEnrolled.jsx'
 import Navbar from './components/students/Navbar.jsx'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 import "quill/dist/quill.snow.css"
 const App = () => {
   const isEducatorRoute = useMatch('/educator/*');
@@ -36,6 +38,18 @@ const App = () => {
         </Route>
         
       </Routes>
+       <ToastContainer
+        position="top-right" // You can change this
+        autoClose={5000}     // Auto close after 5 seconds
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" // "light", "dark", "colored"
+      />
     </div>
   )
 }

@@ -15,7 +15,7 @@ connectDB()
 connectCloudinary()
     //Middlewares
 app.use(cors({
-
+    origin: 'http://localhost:5173'
 }))
 app.use(clerkMiddleware())
 
