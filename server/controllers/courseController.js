@@ -4,7 +4,7 @@ import Course from '../models/Course.js';
 
 export const getAllCourse = async(req, res) => {
     try {
-        const courses = await Course.find({ isPublished: true }).select(['-courseContent', '-enrolledStudents ']).populate({ path: 'educator' })
+        const courses = await Course.find({ isPublished: true }).populate({ path: 'educator' })
         res.json({ success: true, courses })
     } catch (error) {
         res.json({ success: false, message: error.message })
@@ -14,10 +14,12 @@ export const getAllCourse = async(req, res) => {
 //get course by id
 export const getCoursebyId = async(req, res) => {
     const { id } = req.params
-
     try {
         const courseData = await Course.findById(id).populate({ path: 'educator' })
             //remove lectureUrl if isPreview is false
+        if (!courseData) {
+            return res.status(404).json({ success: false, message: "Course not found" });
+        }
         courseData.courseContent.forEach(chapter => {
             chapter.chapterContent.forEach(lecture => {
                 if (!lecture.isPreviewFree) {

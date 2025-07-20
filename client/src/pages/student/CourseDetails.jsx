@@ -8,11 +8,11 @@ import Footer from '../../components/students/Footer';
 import YouTube from 'react-youtube'
 const CourseDetails = () => {
   const { id } = useParams();
-  const [courseData, setCourseData] = useState(null);
+  const [courseData, setCourseData] = useState([]);
   const [opensection, setOpensection] = useState({});
   const [alreadyenrolled, setAlreadyEnrolled] = useState(false)
   const [playerData, setPlayerData] = useState(null)
-  const { allcourses, navigate, avgRating, calculateChaptertime, calculateNoOfLectures, currency, calculateCourseDuration } = useContext(AppContext);
+  const { allcourses,  avgRating, calculateChaptertime, calculateNoOfLectures, currency, calculateCourseDuration } = useContext(AppContext);
 
 
   useEffect(() => {
@@ -25,6 +25,7 @@ const CourseDetails = () => {
       }
     }
   }, [allcourses, id]);
+
   const toggleSection = (index) => {
     setOpensection((prev) => (
       {

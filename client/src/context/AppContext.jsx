@@ -9,8 +9,9 @@ export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
   const [allcourses, setAllcourses] = useState([]);
+  const [userdata,setUserData]=useState([])
   const [testimonials, setTestimonials] = useState([])
-  const [isEducator, setIsEducator] = useState(true)
+  const [isEducator, setIsEducator] = useState(false)
   const [enrolledcourses, setEnrolledcourses] = useState([])
   const [enrolledStudents, setEnrolledStudents] = useState([])
   const navigate = useNavigate()
@@ -35,6 +36,25 @@ export const AppContextProvider = (props) => {
 
     }
   }
+  //get UserData 
+  const getUserData = async()=>{
+    if(user.publicMetadata.role==='educator'){
+      setIsEducator(true)
+    }
+    try{
+      const token = await getToken()
+      const {data}=await axios.get(backendUrl+'/api/user/userData',{headers:{Authorization:`Bearer ${token}`}})
+      if(data.success){
+        setUserData(data.user)
+      }else{
+        toast.error("User not found!")
+      }
+    }catch (error) {
+      console.error(error.message)
+      toast.error("Failed to load user"); // For user
+
+    }
+  }
   //calculate the average rating
   const avgRating = (course) => {
     if (course.courseRatings.length == 0) {
@@ -46,7 +66,7 @@ export const AppContextProvider = (props) => {
       totalRatings += rating.rating;
     })
 
-    return totalRatings / course.courseRatings.length
+    return Math.floor(totalRatings / course.courseRatings.length)
   }
   //get all testimonials 
   const getTestimonials = () => {
@@ -78,6 +98,19 @@ export const AppContextProvider = (props) => {
   }
   //Fetch user enrolled courses
   const fetchUserEnrolledCourses = async () => {
+     try{
+      const token = await getToken()
+      const {data}=await axios.get(backendUrl+'/api/user/enrolled-courses',{headers:{Authorization:`Bearer ${token}`}})
+      if(data.success){
+        setEnrolledcourses(data.enrolledCourses)
+      }else{
+        toast.error(data.message)
+      }
+    }catch (error) {
+      console.error(error.message)
+      toast.error(error.message); // For user
+
+    }
   }
   //Fetch Enrolled Students
   const fetchEnrolledStudents = async () => {
@@ -86,16 +119,14 @@ export const AppContextProvider = (props) => {
   useEffect(() => {
     getAllcourses();
     getTestimonials();
-    fetchUserEnrolledCourses()
     fetchEnrolledStudents()
   }, [])
  
-  const logToken = async () => {
-    console.log(await getToken())
-  }
+ 
   useEffect(() => {
     if (user) {
-      logToken()
+      getUserData()
+      fetchUserEnrolledCourses()
     }
   }, [user])
   const value = {
@@ -111,7 +142,12 @@ export const AppContextProvider = (props) => {
     calculateNoOfLectures,
     currency,
     enrolledcourses,
-    enrolledStudents
+    enrolledStudents,
+    backendUrl,
+    userdata,
+    setUserData,
+    getToken,
+    getAllcourses
   }
   return (
     <AppContext.Provider value={value}>
