@@ -4,7 +4,6 @@ import Loading from '../../components/students/Loading'
 const StudentsEnrolled = () => {
   const { enrolledStudents } = useContext(AppContext)
 
-  console.log(enrolledStudents)
 
   return enrolledStudents ? (
     <div className='h-screen flex flex-col items-start justify-between md:p-8 p-4 md:pb-0 pt-8 '>

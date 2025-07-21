@@ -6,25 +6,59 @@ import { assets } from '../../assets/assets';
 import humanizeDuration from 'humanize-duration';
 import Footer from '../../components/students/Footer';
 import YouTube from 'react-youtube'
+import axios from 'axios';
+import { toast } from 'react-toastify';
 const CourseDetails = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState([]);
   const [opensection, setOpensection] = useState({});
   const [alreadyenrolled, setAlreadyEnrolled] = useState(false)
   const [playerData, setPlayerData] = useState(null)
-  const { allcourses,  avgRating, calculateChaptertime, calculateNoOfLectures, currency, calculateCourseDuration } = useContext(AppContext);
+  const { allcourses, avgRating, calculateChaptertime, calculateNoOfLectures, currency, calculateCourseDuration, userdata, backendUrl,getToken } = useContext(AppContext);
 
-
-  useEffect(() => {
-    if (allcourses && allcourses.length > 0) {
-      const foundCourse = allcourses.find(course => course._id === id);
-      if (foundCourse) {
-        setCourseData(foundCourse);
+  const fetchCourseData = async () => {
+    try {
+      const { data } = await axios.get(backendUrl + '/api/course/' + id)
+      console.log(data.courseData)
+      if (data.success) {
+        setCourseData(data.courseData)
       } else {
-        console.error('Course not found!');
+        toast.error(data.message)
       }
+      console.log(courseData)
+    } catch (error) {
+      toast.error(error.message)
     }
-  }, [allcourses, id]);
+  }
+
+  const enrollCourse = async () => {
+    try {
+      if (!userdata) {
+        return toast.warn("Login to enroll")
+      }
+      if (alreadyenrolled) {
+        return toast.warn("Already enrolled")
+      }
+      const token =await getToken()
+      const {data}= await axios.post(backendUrl+'/api/user/purchase',{courseId:courseData._id},{headers:{Authorization:`Bearer ${token}`}})
+      if(data.success){
+        const {session_url}=data
+        window.location.replace(session_url)
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+  useEffect(() => {
+    fetchCourseData()
+  }, []);
+  useEffect(() => {
+    if (userdata && courseData) {
+      setAlreadyEnrolled(userdata.enrolledCourses.includes(courseData._id))
+    }
+  }, [userdata, courseData]);
 
   const toggleSection = (index) => {
     setOpensection((prev) => (
@@ -34,6 +68,7 @@ const CourseDetails = () => {
       }
     ))
   }
+  console.log(courseData)
   if (!courseData) {
     return (
       <Loading />
@@ -105,12 +140,12 @@ const CourseDetails = () => {
 
         </div>
         <div className='max-w-course-card z-10 shadow-custom-card rounded-t md:rounded-none overflow-hidden bg-white min-w-[300px] sm:min-w-[420px]'>{/* right column */}
-              {
-              playerData ? <YouTube videoId={playerData.videoId} opts={{ playerVars: { autoplay: 1 } }} iframeClassName='w-full aspect-video' />
-                :
-                <img src={courseData.courseThumbnail} alt="thumbnail" className='' />
+          {
+            playerData ? <YouTube videoId={playerData.videoId} opts={{ playerVars: { autoplay: 1 } }} iframeClassName='w-full aspect-video' />
+              :
+              <img src={courseData.courseThumbnail} alt="thumbnail" className='' />
 
-            }
+          }
           <div className='p-5'>
             <div className='flex items-center gap-2'>
 
@@ -139,7 +174,7 @@ const CourseDetails = () => {
                 <p>{calculateNoOfLectures(courseData)}</p>
               </div>
             </div>
-            <button className='bg-blue-600 md:mt-6 mt-4 py-3 rounded-sm px-10 text-white w-full'>{alreadyenrolled ? "Already Enrolled" : "Enroll Now"}</button>
+            <button onClick={enrollCourse} className='bg-blue-600 md:mt-6 mt-4 py-3 rounded-sm px-10 text-white w-full'>{alreadyenrolled ? "Already Enrolled" : "Enroll Now"}</button>
             <div className='pt-6'>
               <p className='md:text-xl text-lg font-medium text-gray-800'>What's this course contains?</p>
               <ul className='ml-4 pt-2 text-sm md:text-default list-disc text-gray-500'>
