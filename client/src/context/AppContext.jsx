@@ -49,6 +49,7 @@ export const AppContextProvider = (props) => {
         setUserData(data.user)
       }else{
         toast.error("User not found!")
+        console.error(data.message)
       }
     }catch (error) {
       console.error(error.message)
@@ -102,6 +103,7 @@ export const AppContextProvider = (props) => {
      try{
       const token = await getToken()
       const {data}=await axios.get(backendUrl+'/api/user/enrolled-courses',{headers:{Authorization:`Bearer ${token}`}})
+      console.log(data)
       if(data.success){
         setEnrolledcourses(data.enrolledCourses)
       }else{
