@@ -18,14 +18,14 @@ const CourseDetails = () => {
 
   const fetchCourseData = async () => {
     try {
-      const { data } = await axios.get(backendUrl + '/api/course/' + id)
+      console.log(id)
+      const { data } = await axios.get(backendUrl+'/api/course/'+id)
       console.log(data.courseData)
       if (data.success) {
         setCourseData(data.courseData)
       } else {
         toast.error(data.message)
       }
-      console.log(courseData)
     } catch (error) {
       toast.error(error.message)
     }
@@ -68,7 +68,6 @@ const CourseDetails = () => {
       }
     ))
   }
-  console.log(courseData)
   if (!courseData) {
     return (
       <Loading />

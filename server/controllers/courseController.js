@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 
 export const getAllCourse = async(req, res) => {
     try {
-        const courses = await Course.find({ isPublished: true }).populate({ path: 'educator' })
+        const courses = await Course.find({ isPublished: true }).select(['-enrolledStudents -courseContent']).populate({ path: 'educator' })
         res.json({ success: true, courses })
     } catch (error) {
         res.json({ success: false, message: error.message })
@@ -16,10 +16,8 @@ export const getAllCourse = async(req, res) => {
 // Controller
 export const getCourseById = async(req, res) => {
     const { id } = req.params;
-    console.log("Course Id:", id)
     try {
         const course = await Course.findById(id).populate('educator');
-        console.log("Course found:", course);
         if (!course) {
             return res.status(404).json({ success: false, message: "Course not found" });
         }
