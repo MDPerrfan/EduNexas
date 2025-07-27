@@ -23,7 +23,6 @@ export const addCourse = async(req, res) => {
             const { userId } = req.auth()
             const { courseData } = req.body
             const imageFile = req.file
-            console.log(userId)
             if (!imageFile) {
                 return res.json({ success: false, message: "Thumbnail is not attached" })
             }
@@ -43,8 +42,8 @@ export const addCourse = async(req, res) => {
     //getting Educator Courses
 export const getEducatorCourses = async(req, res) => {
         try {
-            const { educator } = req.auth()
-            const courses = await Course.find(educator)
+            const { educatorId } = req.auth()
+            const courses = await Course.find(educatorId)
             res.json({ success: true, courses })
         } catch (error) {
             res.json({ success: false, message: error.message })
@@ -78,7 +77,7 @@ export const educatorDashboardData = async(req, res) => {
         }
         res.json({
             status: true,
-            dashboardDarta: {
+            dashboardData: {
                 totalEarnings,
                 enrolledStudentsData,
                 totalCourses
@@ -106,7 +105,7 @@ export const getEnrolledStudentsData = async(req, res) => {
             purchaseDate: purchase.createdAt
         }))
 
-        res.json({ success: ture, enrolledStudents })
+        res.json({ success: true, enrolledStudents })
     } catch (error) {
         res.json({ success: false, message: error.message })
 
