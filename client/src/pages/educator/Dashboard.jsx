@@ -1,17 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
-import { assets, dummyDashboardData } from '../../assets/assets'
+import { assets} from '../../assets/assets'
 import Loading from '../../components/students/Loading'
-
+import axios from 'axios'
+import { toast } from 'react-toastify'
 const Dashboard = () => {
-  const [dashboardData,setDashboardData]=useState(null)
-  const {currency}=useContext(AppContext)
-  const fecthDashData=async()=>{
-    setDashboardData(dummyDashboardData)
+  const [dashboardData, setDashboardData] = useState(null)
+  const { currency, backendUrl, getToken } = useContext(AppContext)
+  const fecthDashData = async () => {
+    try {
+      const token = await getToken()
+      const { data } = await axios.get(backendUrl + '/api/educator/dashboard', { headers: { Authorization: `Bearer ${token}` } })
+      console.log(data)
+      if (data) {
+        setDashboardData(data.dashboardData)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
   }
-  useEffect(()=>{
+
+  useEffect(() => {
     fecthDashData()
-  },[])
+  }, [])
   return dashboardData ? (
     <div className='min-h-screen flex flex-col items-start justify-between gap-8 md:p-8 md:pb-0 p-4 pt-8 pb-0'>
       <div className='space-y-5'>
@@ -23,14 +36,14 @@ const Dashboard = () => {
               <p className='text-base text-gray-500'>Total Enrollments</p>
             </div>
           </div>
-            <div className='flex items-center gap-3 shadow-card border border-blue-500 p-4 w-56 rounded-md'>
+          <div className='flex items-center gap-3 shadow-card border border-blue-500 p-4 w-56 rounded-md'>
             <img src={assets.appointments_icon} alt="" />
             <div>
               <p className='text-2xl font-medium text-gray-600'>{dashboardData.enrolledStudentsData.length}</p>
               <p className='text-base text-gray-500'>Total Courses</p>
             </div>
           </div>
-            <div className='flex items-center gap-3 shadow-card border border-blue-500 p-4 w-56 rounded-md'>
+          <div className='flex items-center gap-3 shadow-card border border-blue-500 p-4 w-56 rounded-md'>
             <img src={assets.earning_icon} alt="" />
             <div>
               <p className='text-2xl font-medium text-gray-600'>{currency}{dashboardData.enrolledStudentsData.length}</p>
@@ -51,9 +64,9 @@ const Dashboard = () => {
               </thead>
               <tbody>
                 {
-                  dashboardData.enrolledStudentsData.map((item,index)=>(
+                  dashboardData.enrolledStudentsData.map((item, index) => (
                     <tr key={index} className='border-b border-gray-500/20'>
-                      <td className='px-4 py-3 text-center hidden sm:table-cell'>{index+1}</td>
+                      <td className='px-4 py-3 text-center hidden sm:table-cell'>{index + 1}</td>
                       <td className='flex items-center space-x-3 md:px-4 px-2 py-3'>
                         <img className='w-9 h-9 rounded-full' src={item.student.imageUrl} alt="" />
                         <span>{item.student.name}</span>
@@ -68,7 +81,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  ) : <Loading/>
+  ) : <Loading />
 }
 
 export default Dashboard

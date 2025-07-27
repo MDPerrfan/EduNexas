@@ -117,7 +117,21 @@ export const AppContextProvider = (props) => {
   }
   //Fetch Enrolled Students
   const fetchEnrolledStudents = async () => {
-    setEnrolledStudents(dummyStudentEnrolled)
+try{
+      const token = await getToken()
+      const {data}=await axios.get(backendUrl+'/api/educator/enrolled-students',{headers:{Authorization:`Bearer ${token}`}})
+      console.log(data)
+      if(data.success){
+        setEnrolledcourses(data.enrolledStudents)
+      }else{
+        toast.error(data.message)
+      }
+    }catch (error) {
+      console.error(error.message)
+      toast.error(error.message); // For user
+
+    }
+
   }
   useEffect(() => {
     getAllcourses();

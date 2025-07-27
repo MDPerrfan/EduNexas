@@ -3,8 +3,13 @@ import uniqid from 'uniqid';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import { assets } from '../../assets/assets';
+import { useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const AddCourse = () => {
+  const { backendUrl, getToken } = useContext(AppContext)
   const quillRef = useRef(null);
   const editorRef = useRef(null);
 
@@ -38,7 +43,9 @@ const AddCourse = () => {
     setChapters(prev => [
       ...prev,
       {
-        id: uniqid(),
+        id: uniqid(), // This is used for local React key, consider renaming to chapterId for consistency
+        chapterId: uniqid(), // Add chapterId here
+        chapterOrder: prev.length + 1, // Assign order
         chapterTitle: newChapterTitle,
         chapterContent: [],
         collapsed: false
@@ -59,9 +66,16 @@ const AddCourse = () => {
       prev.map(chapter =>
         chapter.id === currentChapterId
           ? {
-              ...chapter,
-              chapterContent: [...chapter.chapterContent, lectureDetails]
-            }
+            ...chapter,
+            chapterContent: [
+              ...chapter.chapterContent,
+              {
+                ...lectureDetails,
+                lectureId: uniqid(), // Add lectureId here
+                lectureOrder: chapter.chapterContent.length + 1 // Assign order
+              }
+            ]
+          }
           : chapter
       )
     );
@@ -91,9 +105,10 @@ const AddCourse = () => {
       prev.map(ch =>
         ch.id === chapterId
           ? {
-              ...ch,
-              chapterContent: ch.chapterContent.filter((_, i) => i !== lectureIndex),
-            }
+            ...ch,
+            chapterContent: ch.chapterContent.filter((_, i) => i !== lectureIndex)
+              .map((lecture, index) => ({ ...lecture, lectureOrder: index + 1 })), // Re-order after deletion
+          }
           : ch
       )
     );
@@ -101,12 +116,52 @@ const AddCourse = () => {
 
   // Function to delete a chapter
   const deleteChapter = (chapterId) => {
-    setChapters(prev => prev.filter(chapter => chapter.id !== chapterId));
+    setChapters(prev => prev.filter(chapter => chapter.id !== chapterId)
+      .map((chapter, index) => ({ ...chapter, chapterOrder: index + 1 })) // Re-order after deletion
+    );
   };
+  //Function to submit the course data
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault()
+      if (!image) {
+        toast.error("Select a thumbnail!")
+        return; // Added return to stop execution if no image
+      }
+      const courseData = {
+        courseTitle,
+        courseDescription: quillRef.current.root.innerHTML,
+        coursePrice: Number(coursePrice),
+        discount: Number(discount),
+        courseContent: chapters,
 
+      }
+      const formData = new FormData()
+      formData.append('courseData', JSON.stringify(courseData))
+      formData.append('image', image)
+      const token = await getToken()
+
+      const { data } = await axios.post(backendUrl + '/api/educator/add-course', formData, { headers: { Authorization: `Bearer ${token}` } })
+      if (data.success) {
+        toast.success("Course added!")
+        setCoursePrice(0)
+        setCourseTitle('')
+        setImage(null)
+        setDiscount(0)
+        setChapters([])
+        quillRef.current.root.innerHTML = ""
+      } else {
+        toast.error(data.message)
+        console.log(data.message)
+      }
+    } catch (error) {
+      console.error(error.message)
+      toast.error("Error adding course: " + error.message); // For user
+    }
+  }
   return (
     <div className='h-screen overflow-scroll flex flex-col items-start justify-between md:p-8 md:pb-0 p-4 pt-8 pb-0'>
-      <form className='flex flex-col gap-4 max-w-md w-full text-gray-500'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-4 max-w-md w-full text-gray-500'>
         <div className='flex flex-col gap-1'>
           <p>Course Title</p>
           <input
@@ -191,7 +246,7 @@ const AddCourse = () => {
                   <div className='p-4'>
                     {
                       chapter.chapterContent.map((lecture, idx) => (
-                        <div key={idx} className='flex justify-between items-center mb-2'>
+                        <div key={lecture.lectureId} className='flex justify-between items-center mb-2'>
                           <span>
                             {idx + 1}. {lecture.lectureTitle} - {lecture.lectureDuration} mins - <a href={lecture.lectureUrl} target='_blank' rel="noreferrer" className='text-blue-500'>Link</a> - {lecture.isPreviewFree ? 'Free Preview' : 'Paid'}
                           </span>
