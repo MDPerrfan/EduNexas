@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import {  dummyTestimonial } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import humanizeDuration from 'humanize-duration'
 import { useAuth, useUser } from '@clerk/clerk-react'
@@ -71,8 +70,19 @@ export const AppContextProvider = (props) => {
     return Math.floor(totalRatings / course.courseRatings.length)
   }
   //get all testimonials 
-  const getTestimonials = () => {
-    setTestimonials(dummyTestimonial)
+  const getTestimonials = async() => {
+    try {
+    const { data } = await axios.get(`${backendUrl}/api/testimonial/all`);
+    if (data.success) {
+      console.log(data.testimonials)
+      setTestimonials(data.testimonials); // Make sure `testimonials` is in your context state
+    } else {
+      toast.error(data.message || 'Failed to load testimonials');
+    }
+  } catch (error) {
+    console.error('Error fetching testimonials:', error.message);
+    toast.error('Something went wrong while fetching testimonials');
+  }
   }
   //Function to calculate chapter time
   const calculateChaptertime = (chapter) => {
@@ -141,8 +151,6 @@ try{
     if (user) {
       getUserData()
       fetchUserEnrolledCourses()
-      fetchEnrolledStudents()
-
     }
   }, [user])
   const value = {

@@ -3,6 +3,7 @@ import { Purchase } from '../models/Purchase.js';
 import Course from '../models/Course.js';
 import Stripe from 'stripe'
 import { CourseProgress } from "../models/CourseProgress.js";
+import { Testimonial } from "../models/Testimonial.js";
 
 //get user data
 export const getUserData = async(req, res) => {
@@ -143,6 +144,31 @@ export const addUserRatings = async(req, res) => {
         }
         await course.save()
         return res.json({ success: true, message: 'Rated!' })
+    } catch (error) {
+        res.json({ success: false, message: error.message })
+    }
+}
+
+//user review of the website
+export const addTestimonial = async(req, res) => {
+    try {
+        const { userId } = req.auth()
+        const { feedback, rating } = req.body;
+
+        const user = await User.findById(userId); // assuming you store name, image
+        if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+        const testimonial = new Testimonial({
+            userId,
+            name: user.name,
+            image: user.image, // stored in user collection
+            feedback,
+            rating
+        });
+
+        await testimonial.save();
+        return res.json({ success: true, message: "Testimonial submitted successfully!" });
+
     } catch (error) {
         res.json({ success: false, message: error.message })
     }
