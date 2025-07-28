@@ -10,19 +10,18 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 const CourseDetails = () => {
   const { id } = useParams();
-  const [courseData, setCourseData] = useState([]);
+  const [courseData, setCourseData] = useState(null);
   const [opensection, setOpensection] = useState({});
   const [alreadyenrolled, setAlreadyEnrolled] = useState(false)
   const [playerData, setPlayerData] = useState(null)
-  const { allcourses, avgRating, calculateChaptertime, calculateNoOfLectures, currency, calculateCourseDuration, userdata, backendUrl,getToken } = useContext(AppContext);
+  const { avgRating, calculateChaptertime, calculateNoOfLectures, currency, calculateCourseDuration, userdata, backendUrl,getToken } = useContext(AppContext);
 
   const fetchCourseData = async () => {
     try {
-      console.log(id)
       const { data } = await axios.get(backendUrl+'/api/course/'+id)
-      console.log(data.courseData)
+      console.log(data.data)
       if (data.success) {
-        setCourseData(data.courseData)
+        setCourseData(data.data)
       } else {
         toast.error(data.message)
       }
@@ -53,12 +52,16 @@ const CourseDetails = () => {
   }
   useEffect(() => {
     fetchCourseData()
+    console.log(courseData)
   }, []);
   useEffect(() => {
-    if (userdata && courseData) {
-      setAlreadyEnrolled(userdata.enrolledCourses.includes(courseData._id))
-    }
-  }, [userdata, courseData]);
+  if (userdata && courseData && userdata.enrolledCourses) {
+    setAlreadyEnrolled(userdata.enrolledCourses.includes(courseData._id));
+  } else {
+    setAlreadyEnrolled(false);  // not enrolled if no user
+  }
+}, [userdata, courseData]);
+
 
   const toggleSection = (index) => {
     setOpensection((prev) => (
@@ -68,7 +71,7 @@ const CourseDetails = () => {
       }
     ))
   }
-  if (!courseData) {
+  if (!courseData||!userdata) {
     return (
       <Loading />
     );

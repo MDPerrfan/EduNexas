@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import {  dummyStudentEnrolled, dummyTestimonial } from "../assets/assets";
+import {  dummyTestimonial } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import humanizeDuration from 'humanize-duration'
 import { useAuth, useUser } from '@clerk/clerk-react'
@@ -103,7 +103,6 @@ export const AppContextProvider = (props) => {
      try{
       const token = await getToken()
       const {data}=await axios.get(backendUrl+'/api/user/enrolled-courses',{headers:{Authorization:`Bearer ${token}`}})
-      console.log(data)
       if(data.success){
         setEnrolledcourses(data.enrolledCourses)
       }else{
@@ -120,9 +119,8 @@ export const AppContextProvider = (props) => {
 try{
       const token = await getToken()
       const {data}=await axios.get(backendUrl+'/api/educator/enrolled-students',{headers:{Authorization:`Bearer ${token}`}})
-      console.log(data)
       if(data.success){
-        setEnrolledcourses(data.enrolledStudents)
+        setEnrolledStudents(data.enrolledStudents)
       }else{
         toast.error(data.message)
       }
@@ -136,7 +134,6 @@ try{
   useEffect(() => {
     getAllcourses();
     getTestimonials();
-    fetchEnrolledStudents()
   }, [])
  
  
@@ -144,6 +141,8 @@ try{
     if (user) {
       getUserData()
       fetchUserEnrolledCourses()
+      fetchEnrolledStudents()
+
     }
   }, [user])
   const value = {
