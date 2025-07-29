@@ -3,8 +3,9 @@ import { AppContext } from '../../context/AppContext'
 import { assets } from '../../assets/assets'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { useEffect } from 'react'
 const TestimonialSection = () => {
-  const { backendUrl, getToken, testimonials } = useContext(AppContext)
+  const { backendUrl, getToken, testimonials,getTestimonials } = useContext(AppContext)
 
   const [rating, setRating] = useState(0)
   const [feedback, setFeedback] = useState('')
@@ -39,7 +40,9 @@ const TestimonialSection = () => {
       toast.error("Error submitting testimonial.");
     }
   };
-
+useEffect(()=>{
+getTestimonials()
+})
   return (
     <div className='px-5'>
       <h2 className='text-3xl mb-3  text-gray-800 font-medium'>Testimonials</h2>
@@ -50,7 +53,7 @@ const TestimonialSection = () => {
           testimonials.map((item, index) => (
             <div key={index} className='border border-r-1 rounded shadow-md overflow-hidden pb-5'>
               <div className='flex gap-3 items-center p-3 bg-gray-100'>
-                <img className='w-16' src={item.image} alt="" />
+                <img className='w-16 rounded-full' src={item.userId.imageUrl} alt="" />
                 <div className='flex flex-col items-start'>
                   <p>{item.name}</p>
                 </div>
@@ -69,7 +72,7 @@ const TestimonialSection = () => {
           ))
         }
       </div>
-      <div className='my-10 p-5 mx-5 shadow-md rounded '>
+      <div className='my-10 p-5 md:mx-5 shadow-md rounded '>
         <h3 className='text-xl font-semibold text-gray-700 mb-2'>Share Your Testimonial</h3>
         <div className='flex flex-col items-center justify-center gap-3'>
           <div className='flex flex-col items-center '>

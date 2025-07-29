@@ -13,7 +13,7 @@ const MyEnrollments = () => {
       const token = await getToken()
       const tempProgressArray = await Promise.all(
         enrolledcourses.map(async (course) => {
-          const { data } = await axios.post(backendUrl + '/api/user/get-course-progress', { courseId: course._id }, { headers: { Authorization: `Bearer ${token}` } })
+          const { data } = await axios.get(backendUrl + '/api/user/get-course-progress', { courseId: course._id }, { headers: { Authorization: `Bearer ${token}` } })
           if (data.success) {
             let totalLectures = calculateNoOfLectures(course);
             const lectureCompleted = data.progressData ? data.progressData.lectureCompleted.length : 0;

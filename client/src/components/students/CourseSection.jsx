@@ -2,8 +2,12 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import CourseCard from './CourseCard'
 import { AppContext } from '../../context/AppContext'
+import Loading from './Loading'
 const CourseSection = () => {
   const { allcourses } = useContext(AppContext)
+  if(!allcourses){
+    <Loading/>
+  }
   return (
     <div className='py-16 md:px-40 px-8'>
       <h2 className='md:text-course-details-heading-large text-course-details-heading-small text-gray-800 py-2'>Learn from the best</h2>

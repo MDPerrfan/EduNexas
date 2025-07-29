@@ -15,7 +15,7 @@ export const AppContextProvider = (props) => {
   const [enrolledStudents, setEnrolledStudents] = useState([])
   const navigate = useNavigate()
   const backendUrl = import.meta.env.VITE_BACKEND_URL
-  const currency = 'BDT'
+  const currency = 'USD'
 
   const { getToken } = useAuth()
   const { user } = useUser()
@@ -74,7 +74,6 @@ export const AppContextProvider = (props) => {
     try {
     const { data } = await axios.get(`${backendUrl}/api/testimonial/all`);
     if (data.success) {
-      console.log(data.testimonials)
       setTestimonials(data.testimonials); // Make sure `testimonials` is in your context state
     } else {
       toast.error(data.message || 'Failed to load testimonials');
@@ -130,6 +129,7 @@ try{
       const token = await getToken()
       const {data}=await axios.get(backendUrl+'/api/educator/enrolled-students',{headers:{Authorization:`Bearer ${token}`}})
       if(data.success){
+        console.log(data)
         setEnrolledStudents(data.enrolledStudents)
       }else{
         toast.error(data.message)
@@ -152,6 +152,10 @@ try{
       getUserData()
       fetchUserEnrolledCourses()
     }
+     const role = user?.publicMetadata?.role; // Adjust this if your Clerk role is stored differently
+    if (role === 'educator') {
+      fetchEnrolledStudents();
+    }
   }, [user])
   const value = {
     allcourses,
@@ -171,7 +175,8 @@ try{
     userdata,
     setUserData,
     getToken,
-    getAllcourses
+    getAllcourses,
+    getTestimonials
   }
   return (
     <AppContext.Provider value={value}>
